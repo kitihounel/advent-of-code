@@ -68,5 +68,7 @@ for seed_range in seed_ranges:
             tmp.extend(match_range_against_section(sr, section))
         next_section_input = tmp
     location_ranges.extend(next_section_input)
+
+assert sum(sr[1] - sr[0] for sr in seed_ranges) == sum(lr[1] - lr[0] for lr in seed_ranges)
 location_ranges.sort()
 print(location_ranges[0][0])

@@ -31,14 +31,17 @@ def hand_score(hand):
         return plain_hand_score(hand)
 
     max_score = -1
+    seen = set()
     for tup in product(cards, repeat=len(j_indexes)):
         for i, ch in zip(j_indexes, tup):
             chars[i] = ch
         new_hand = ''.join(chars)
-        score = plain_hand_score(new_hand)
-        max_score = max(score, max_score)
-        if max_score == 7:
-            break
+        if new_hand not in seen:
+            score = plain_hand_score(new_hand)
+            max_score = max(score, max_score)
+            seen.add(new_hand)
+            if max_score == 7:
+                break
 
     return max_score
 

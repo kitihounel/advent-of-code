@@ -32,7 +32,8 @@ def hand_score(hand):
 
     max_score = -1
     seen = set()
-    for tup in product(cards, repeat=len(j_indexes)):
+    choices = [ch for  ch in hand if ch != 'J'] + ['J']
+    for tup in product(choices, repeat=len(j_indexes)):
         for i, ch in zip(j_indexes, tup):
             chars[i] = ch
         new_hand = ''.join(chars)

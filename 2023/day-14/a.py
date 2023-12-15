@@ -15,12 +15,12 @@ def pairwise(iterable):
 
 grid = read_input()
 height, width = len(grid), len(grid[0])
-v = 0
+load = 0
 for j in range(width):
-    rows = [-1] + [i for i in range(height) if grid[i][j] == '#'] + [height]
-    for p, q in pairwise(rows):
+    cube_rock_rows = [-1] + [i for i in range(height) if grid[i][j] == '#'] + [height]
+    for p, q in pairwise(cube_rock_rows):
         n = sum(1 if grid[i][j] == 'O' else 0 for i in range(p + 1, q)) # Number of rounded rocks
-        a = height - (p + 1) # First row occupied by a rounded rock after the roll in 1-based index
+        a = height - (p + 1) # First row occupied by a rounded rock after the tilt in 1-based index
         s = a * n - (n * (n - 1)) // 2
-        v += s
-print(v)
+        load += s
+print(load)

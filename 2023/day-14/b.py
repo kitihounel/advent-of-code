@@ -61,17 +61,12 @@ def to_east():
             current_col += 1
 
 
-def compute_charge():
-    global grid, height, width
-    v = 0
-    for j in range(width):
-        rows = [-1] + [i for i in range(height) if grid[i][j] == '#'] + [height]
-        for p, q in pairwise(rows):
-            n = sum(1 if grid[i][j] == 'O' else 0 for i in range(p + 1, q)) # Number of rounded rocks
-            a = height - (p + 1) # First row occupied by a rounded rock after the roll in 1-based index
-            s = a * n - (n * (n - 1)) // 2
-            v += s
-    return v
+def compute_load():
+    global grid, height
+    load = 0
+    for i, row in enumerate(grid, 0):
+        load += (height - i) * sum(1 if ch == 'O' else 0 for ch in row)
+    return load
 
 
 def cycle():
@@ -85,7 +80,7 @@ height, width = len(grid), len(grid[0])
 state = tuple(tuple(row) for row in grid)
 state_indexes = {state: 0}
 states = [state]
-charges = [compute_charge()]
+loads = [compute_load()]
 limit = 10 ** 9
 for i in range(1, limit + 1):
     cycle()
@@ -93,14 +88,12 @@ for i in range(1, limit + 1):
     if state in state_indexes:
         first_appareance = state_indexes[state]
         cycle_length = i - first_appareance
-        remaining = (limit - first_appareance) % cycle_length
-        for _ in range(remaining):
-            cycle()
-        print(compute_charge())
+        m = (limit - first_appareance) % cycle_length
+        print(loads[first_appareance + m])
         break
-    states.append(state)
-    charges.append(compute_charge())
     state_indexes[state] = i
+    states.append(state)
+    loads.append(compute_load())
 else:
     print('No cycle found. Have to do all the work.')
-    print(compute_charge())
+    print(compute_load())

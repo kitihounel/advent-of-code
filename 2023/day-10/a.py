@@ -1,8 +1,8 @@
 from sys import stdin, setrecursionlimit
-from math import ceil
 
 
 setrecursionlimit(50_000)
+
 
 valid_neighbors = {
     '|': [
@@ -58,12 +58,12 @@ def get_neighbors(i, j):
     
 
 def visit(pipe: tuple, parents: dict, visited: set, onhold: set):
-    global start
+    global entrance
     onhold.add(pipe)
     visited.add(pipe)
     neighbors = get_neighbors(*pipe)
     # For the start pipe, we only visit one of its children.
-    if pipe == start:
+    if pipe == entrance:
         neighbors = neighbors[0:1]
     for tup in neighbors:
         if tup == parents.get(pipe, None):
@@ -71,20 +71,20 @@ def visit(pipe: tuple, parents: dict, visited: set, onhold: set):
         if tup not in visited:
             parents[tup] = pipe
             visit(tup, parents, visited, onhold)
-        elif tup == start:
+        elif tup == entrance:
             raise Exception('Loop closed')
     onhold.remove(pipe)
 
 
 maze, height, width = read_input()
-start = (20, 103)   # Position of start pipe
-maze[20][103] = '7' # Start pipe is of type '7'.
+entrance = (20, 103) # Position of start pipe
+maze[20][103] = '7'  # Start pipe is of type '7'.
 visited = set()
 parents = {}
 onhold = set()
 try:
-    visit(start, parents, visited, onhold)
+    visit(entrance, parents, visited, onhold)
 except Exception as e:
     pass
-v = ceil(len(onhold) / 2)
+v = len(onhold) // 2 # The length of the loop will always be even since it is a 2-d space.
 print(v)

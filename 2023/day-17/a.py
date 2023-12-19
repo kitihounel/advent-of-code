@@ -5,8 +5,8 @@ from heapq import heapify, heappop
 
 TOP, LEFT, DOWN, RIGHT = 0, 1, 2, 3
 B = namedtuple('Block', ['cost', 'i', 'j', 'k', 'direction'])
-M = namedtuple('Move', ['di', 'dj'])
-moves = { TOP: M(-1, 0), LEFT: M(0, -1), DOWN: M(+1, 0), RIGHT: M(0, +1) }
+W = namedtuple('Walk', ['di', 'dj'])
+walks = { TOP: W(-1, 0), LEFT: W(0, -1), DOWN: W(+1, 0), RIGHT: W(0, +1) }
 
 
 def read_input():
@@ -25,10 +25,10 @@ while len(q) != 0:
         break
 
     list_extended = False
-    for direction, m in moves.items():
+    for direction, w in walks.items():
         if direction == (b.direction + 2) % 4:
             continue
-        i, j = b.i + m.di, b.j + m.dj
+        i, j = b.i + w.di, b.j + w.dj
         if not (0 <= i < height and 0 <= j < width):
             continue
         if direction != b.direction and (i, j, direction, 1) not in seen:

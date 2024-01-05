@@ -1,3 +1,5 @@
+# Day 6
+
 Let $L$ be the duration of a race and $R$ the record associated with it.
 
 The distance the boat can travel if we press the button during $t$ milliseconds is: $D = (L - t) * t = -t^2 + L*t$. 

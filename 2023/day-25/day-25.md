@@ -1,7 +1,7 @@
 # Day 25
 
 The solution to this problem is to find a minimum cut in a graph. We will implement it later an efficient solution later
-of simply use the `networkx` package.
+of simply use the `networkx` package. There is also this [gist](https://gist.github.com/kolloldas) for the min cut algorithm.
 
 For now, we ran a very slow algorithm to find the three edges that make the graph disconnected if they were removed.
 
